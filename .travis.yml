@@ -1,6 +1,5 @@
 sudo: required
-
-service:
+services:
   - docker
 
 before_install:
@@ -8,3 +7,16 @@ before_install:
 
 script:
   docker run tifla/learn-docker npm run test -- --coverage
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-2"
+  app: "docker-react"
+  env: "DockerReact-env"
+  bucket_name: "elasticbeanstalk-us-east-2-794884163200"
+  bucket_path: "docker-react"
+  on:
+   branch: master
+  acess_key_id: $AWS_ACESS_KEY
+  secret_acess_key:
+    secure: "$AWS_SECRET_KEY"
